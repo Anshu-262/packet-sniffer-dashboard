@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Live Packet Sniffer</title>
+    <script>
+        async function fetchPackets() {
+            const response = await fetch("/packets");
+            const packets = await response.json();
+            const log = document.getElementById("log");
+            log.innerHTML = "";
+            packets.forEach(p => {
+                log.innerHTML += `<li><b>${p.type || "Other"}</b>: ${p.src} → ${p.dst} ${p.query || p.http_data || ""}</li>`;
+            });
+        }
+
+        setInterval(fetchPackets, 3000);
+    </script>
+</head>
+<body>
+    <h1>Live Packet Dashboard</h1>
+    <ul id="log"></ul>
+</body>
+</html>
